@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=yes, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+    <link rel='stylesheet' type="text/css" href="css/nprogress.css" />
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <title>Hollywood Bowl</title>
+</head>
+
+<body>
+<div id="load-screen"></div>
+<img class="mainbg" src="img/hb-mainbg.jpg">
+<div class="back-btn"></div>
+<div class="stage active-screen" id="stage-mainmenu" data-transit="main-menu">
+    <div class="top-bar">
+    </div>
+    <div class="main-menu-block">
+        <div class="screen-main-menu">
+            <img class="main-logo" src="img/hb-logo-@2x.png">
+            <div class="upcoming-show" data-transit="concerts-details" id="0"></div>
+        </div> <!-- end screen-main-menu -->
+    </div> <!-- end wrapper -->
+    <div class="arrow-up"></div>
+    <div class="main-menu-wrapper">
+        <div class="menu">
+            <div class="mainmenu-btn link transit-btn main-concert-btn" id="mainmenu-concerts-btn" data-transit="concerts">CONCERTS</div>
+            <div class="mainmenu-btn transit-btn food-btn" id="mainmenu-culinary-btn" data-transit="food-wine">FOOD + WINE</div>
+            <div class="menu-items">
+                <div class="mainmenu-btn" id="mainmenu-plan-btn">PLAN YOUR VISIT</div>
+                <div class="submenu">
+                    <div class="submenu-btn" id="transportation">TRANSPORTATION</div>
+                    <div class="subsubmenu">
+                        <div class="subsubmenu-btn transit-btn content-section" data-transit="park-ride">PARK + RIDE</div>
+                        <div class="subsubmenu-btn transit-btn" data-transit="shuttle">SHUTTLE</div>
+                        <div class="subsubmenu-btn transit-btn" data-transit="metro">METRO</div>
+                        <div class="subsubmenu-btn" data-url="http://www.hollywoodbowl.com/visit/getting-to-the-bowl/other-options">TAXI / RIDESHARE</div>
+                    </div><!--end subsubmenu-->
+                    <div class="submenu-btn transit-btn" data-transit="parking">PARKING</div>
+                    <div class="submenu-btn" data-url="http://www.hollywoodbowl.com/visit/getting-to-the-bowl/other-options">BICYCLES</div>
+                    <div class="submenu-btn transit-btn" data-transit="accessibility">ACCESSIBILITY</div>
+                    <div class="submenu-btn transit-btn" data-transit="rules">HOUSE RULES</div>
+                    <div class="submenu-btn transit-btn" data-transit="box-office">BOX OFFICE</div>
+                </div><!--end sub menu-->
+                <div class="mainmenu-btn transit-btn map-btn" id="mainmenu-map-btn" data-transit="map">MAP</div>
+                <div class="mainmenu-btn transit-btn" data-transit="find-friends">FIND YOUR FRIENDS</div>
+                <div class="mainmenu-btn transit-btn" data-transit="shop">The BOWL STORE</div>
+                <div class="mainmenu-btn transit-btn">#HOLLYWOODBOWL</div>
+                <div class="mainmenu-btn">ABOUT</div>
+                <div class="submenu">
+                    <div class="submenu-btn transit-btn" data-transit="venue">VENUE</div>
+                    <div class="submenu-btn" data-url="http://www.hollywoodbowl.com/visit/hollywood-bowl-museum">MUSEUM</div>
+                    <div class="submenu-btn transit-btn" data-transit="la-phil">LOS ANGELES PHILHARMONIC</div>
+                    <div class="submenu-btn transit-btn" data-transit="dudamel">GUSTAVO DUDAMEL</div>
+                    <div class="submenu-btn transit-btn" data-transit="orchestra">HOLLYWOOD BOWL ORCHESTRA</div>
+                    <div class="submenu-btn" id="social-media-links"></div>
+                </div><!--end sub menu-->
+            </div><!--end menu items-->
+            <div class="mainmenu-btn transit-btn give-btn" data-transit="give">GIVE</div>
+        </div><!--end menu-->
+    </div><!--end main menu wrapper-->
+    <div class="arrow-down"></div>
+</div> <!-- end stage-mainmenu -->
+
+<!--CONCERT LIST PAGE -->
+
+<div class="stage transit-link tab-link active-tab" id="stage-concerts" data-tabtransit="date" data-transit="concerts">
+    <div class="inner-load-screen"><p>LOADING...</p></div>
+    <!--         <img class="mainbg" src="img/starsbg-@2x.jpg"> -->
+    <div class="head-wrapper">
+        <div class="concerts-title">CONCERTS
+            <!--                <div class="back-btn"></div> -->
+        </div>
+        <div class="concerts-nav">
+            <div class="concerts-nav-btn concerts-btn-selected concerts-btn-date tab-btn" data-tabtransit="date">DATE</div>
+            <div class="concerts-nav-btn concerts-btn-genre tab-btn"  data-tabtransit="genre">GENRE</div>
+            <div class="concerts-nav-btn concerts-btn-series tab-btn"  data-tabtransit="series">SERIES</div>
+        </div>
+    </div> <!-- end head wrapper -->
+    <div class="full-wrapper concerts-full-wrapper" id="concert-table">
+        <div class="concerts-nav-divider"></div>
+    </div>
+    <div class="footer-wrapper" id="concert-feed-footer">
+        <div class="footer-container">
+            <div class="favorites-button transit-btn" data-transit="favorites"></div>
+            <img class="footer" src="img/footer-@2x.jpg">
+        </div>
+    </div>
+</div> <!-- end stage-concerts -->
+
+<!-- CONCERT DETAILS SECTION -->
+
+<div class="stage transit-link" id="stage-concert-detail"  data-transit="concerts-details">
+    <!--         <img class="mainbg" src="img/starsbg-@2x.jpg"> -->
+
+    <!--CONCERT FEATURED SECTION-->
+
+    <div class ="transit-link concerts-full-wrapper">
+        <div class="wrapper" id="concert-detail-wrapper">
+            <div class="concerts-title">CONCERTS
+            </div>
+        </div> <!-- end wrapper -->
+        <div class="concert-title-wrapper">
+            <div id="details-head-wrapper">
+                <div id="concerts-detail-title">Concert Detail Title Here</div>
+                <div id="concerts-detail-date">Concert Detail Dates Here</div>
+            </div><!--end wrapper-->
+            <img id="concert-detail-image" src="">
+            <div id="concert-detail-buy"></div>
+        </div><!--end concert title wrapper-->
+        <div class="concert-detail-wrapper">
+            <div class="detail-info-box"></div>
+        </div><!--end concert detail wrapper-->
+    </div>
+    <div class="footer-wrapper">
+        <div class="footer-container">
+            <div class="favorites-button transit-btn" data-transit="favorites"></div>
+            <img class="footer" src="img/footer-@2x.jpg">
+        </div>
+    </div>
+</div> <!-- end stage-concert-detail -->
+
+<!--End Concert FEATURED section-->
+
+<!--Genre section-->
+
+<div class="stage tab-link" id="stage-concerts-genres" data-tabtransit="genre">
+    <!--         <img class="mainbg" src="img/starsbg-@2x.jpg"> -->
+    <div class="head-wrapper genre-head-wrapper">
+        <div class="concerts-title">CONCERTS</div>
+        <div class="concerts-nav">
+            <div class="concerts-nav-btn concerts-btn-date tab-btn" data-tabtransit="date">DATE</div>
+            <div class="concerts-nav-btn concerts-btn-selected concerts-btn-genre tab-btn" data-tabtransit="genre">GENRE</div>
+            <div class="concerts-nav-btn concerts-btn-series tab-btn" data-tabtransit="series">SERIES</div>
+        </div>
+    </div> <!-- end wrapper -->
+    <div id="back-genre-list">< Back to Genre List</div>
+    <div class="stage full-wrapper concerts-full-wrapper" id="genre-list">
+        <div class="wrapper" id="genre-menu">
+            <div class="genre-btn genre-btn-classical">CLASSICAL</div>
+            <div class="genre-btn genre-btn-pop">POP/ROCK</div>
+            <div class="genre-btn genre-btn-rb">JAZZ/R&B</div>
+            <div class="genre-btn genre-btn-jazz">JAZZ</div>
+            <div class="genre-btn genre-btn-world">WORLD/ALTERNATIVE</div>
+            <div class="genre-btn genre-btn-movie">MOVIE NIGHTS</div>
+            <div class="genre-btn genre-btn-family">FAMILY</div>
+            <div class="genre-btn genre-btn-fireworks">FIREWORKS</div>
+            <div class="genre-btn genre-btn-theatre">THEATRE/DANCE</div>
+            <div class="genre-btn genre-btn-lease">LEASE EVENTS</div>
+            <div class="genre-btn genre-btn-weekend">WEEKEND</div>
+        </div>
+        <div id="genre-table"></div>
+    </div>
+    <div class="footer-wrapper">
+        <div class="footer-container">
+            <div class="favorites-button transit-btn" data-transit="favorites"></div>
+            <img class="footer" src="img/footer-@2x.jpg">
+        </div>
+    </div>
+</div> <!-- end stage-concerts-genres -->
+
+<!--Series section-->
+
+<div class="stage tab-link" id="stage-concerts-series" data-tabtransit="series">
+    <div class="head-wrapper">
+        <div class="concerts-title">CONCERTS</div>
+        <div class="concerts-nav">
+            <div class="concerts-nav-btn concerts-btn-date tab-btn" data-tabtransit="date">DATE</div>
+            <div class="concerts-nav-btn concerts-btn-genre tab-btn" data-tabtransit="genre">GENRE</div>
+            <div class="concerts-nav-btn concerts-btn-selected concerts-btn-series tab-btn" data-tabtransit="series">SERIES</div>
+        </div>
+    </div> <!-- end wrapper -->
+    <div class="footer-wrapper">
+        <div class="footer-container">
+            <div class="favorites-button transit-btn" data-transit="favorites"></div>
+            <img class="footer" src="img/footer-@2x.jpg">
+        </div>
+    </div>
+    <!--         <img class="mainbg" src="img/starsbg-@2x.jpg"> -->
+    <div id="back-genre-list">< Back to Genre List</div>
+    <div class="full-wrapper" id="concerts-genre-full-wrapper">
+        <div class="concerts-nav-divider"></div>
+        <div class="wrapper">
+            <div id="menu-items">
+                <div class="series-btn seriesmenu-btn">CLASSICAL TUESDAYS</div>
+                <div class="submenu">
+                    <div class="series-btn seriessubmenu-btn">CLASSICAL TUESDAYS 1 (TU1)</div>
+                    <div class="series-btn seriessubmenu-btn">CLASSICAL TUESDAYS 2 (TU2)</div>
+                    <div class="series-btn seriessubmenu-btn">CLASSICAL THURSDAYS 1 (TH1)</div>
+                    <div class="series-btn seriessubmenu-btn">CLASSICAL THURSDAYS 2 (TH2)</div>
+                </div>
+                <div class="series-btn seriesmenu-btn">KCRW'S WORLD FESTIVAL</div>
+                <div class="submenu">
+                    <div class="series-btn seriessubmenu-btn">KCRW'S WORLD FESTIVAL 1 (SU1)</div>
+                    <div class="series-btn seriessubmenu-btn">KCRW'S WORLD FESTIVAL 2 (SU2)</div>
+                </div>
+                <div class="series-btn seriesmenu-btn">JAZZ AT THE BOWL</div>
+                <div class="submenu">
+                    <div class="series-btn seriessubmenu-btn">JAZZ AT THE BOWL 1 (JZ1)</div>
+                    <div class="series-btn seriessubmenu-btn">JAZZ AT THE BOWL 2 (JZ2)</div>
+                </div>
+                <div class="series-btn seriesmenu-btn">WEEKEND SPECTACULARS</div>
+                <div class="submenu">
+                    <div class="series-btn seriessubmenu-btn">WEEKEND SPECTACULARS - FRIDAY 1 (FR1)</div>
+                    <div class="series-btn seriessubmenu-btn">WEEKEND SPECTACULARS - FRIDAY 2 (FR2)</div>
+                    <div class="series-btn seriessubmenu-btn">WEEKEND SPECTACULARS - SATURDAY 1 (SA1)</div>
+                    <div class="series-btn seriessubmenu-btn">WEEKEND SPECTACULARS - SATURDAY 2 (SA2)</div>
+                </div>
+                <div class="series-btn seriesmenu-btn">SUNDAY SUNSET</div>
+                <div class="submenu">
+                    <div class="series-btn seriessubmenu-btn">SUNDAY SUNSET (SU3)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- end stage-concerts-series -->
+
+<!-- Food and Drink Section -->
+<div class="food transit-link" id="food-wine" data-transit="food-wine">
+    <!--         <img class="mainbg" src="img/starsbg-@2x.jpg"> -->
+    <div id="food-inner-wrapper">
+    </div>
+    <div id="food-wine-title">FOOD + WINE</div>
+    <div class="full-wrapper food-img-container">
+        <img id="food-wine-image" src="img/food-wine-@2x.jpg">
+    </div>
+    <div id="food-menu">
+        <div class="mainmenu-btn culinary-link" id="culinary-map" data-url="http://www.hollywoodbowl.com/foodandwine/culinary-map">CULINARY MAP</div>
+        <div class="mainmenu-btn culinary-link" id="order-supper" data-url="https://preorder.hollywoodbowl.com/">ORDER SUPPER IN BOX SEATS</div>
+        <div class="mainmenu-btn culinary-link" id="order-picnic" data-url="http://www.hollywoodbowl.com/tickets/group-tickets/picnicking-bowl">ORDER PICNIC BOX</div>
+        <div class="mainmenu-btn culinary-link" id="rest-reservations" data-url="http://www.hollywoodbowl.com/foodandwine/reservations">RESTAURANT RESERVATIONS</div>
+        <div class="mainmenu-btn culinary-link" id="fw-more-info" data-url="http://www.hollywoodbowl.com/foodandwine">MORE INFO</div>
+    </div><!--end main menu wrapper-->
+    <div class="footer-wrapper" id="food-footer">
+        <div class="footer-container">
+            <div class="favorites-button transit-btn" data-transit="favorites"></div>
+            <img class="footer" src="img/footer-@2x.jpg">
+        </div>
+    </div>
+</div> <!--end food-wine -->
+
+<!--FIND YOUR FRIENDS SECTION-->
+<!--Login-->
+<div class="transit-link" id="find-friends-section" data-transit="find-friends">
+    <div class="friends-title-wrapper">
+        <div class="friends-title">Find Friends</div>
+    </div>
+    <div class="friends-main-wrapper">
+        <div class="friends-main-container">
+            <div class="friends-icon-container">
+                <img class="friends-icon" src="img/friends-icon.png" height="147" width="150" />
+            </div>
+            <div class="friends-text-container">
+                <div class="connect-and">
+                    <p>CONNECT AND...</p>
+                </div>
+                <div class="friends-main-text">
+                    <p>See your Facebook friends who are currently attending this event. Become discoverable to your Facebook friends at this event.</p>
+                </div>
+                <a href="#" onclick="fb_login();"><img src="img/fb-login.png" border="0" alt=""></a>
+                <div class="opt-out">
+                    <p>To opt out of being discoverable in the future just go to the settings icon (upper right) and select "Facebook Settings" and select "Disconnect from Facebook" option.</p>
+                </div>
+            </div>
+        </div>
+    </div><!--friends main wrapper-->
+    <div class="footer-wrapper">
+        <div class="footer-container">
+            <div class="favorites-button transit-btn" data-transit="favorites"></div>
+            <img class="footer" src="img/footer-@2x.jpg">
+        </div>
+    </div>
+</div>
+<!--Friends list-->
+<div id="friends-list">
+    <div class="friends-title-wrapper">
+        <div class="friends-title">Find Friends</div>
+        <div class="log-out"><a href="#">Log Out</a></div>
+    </div>
+    <div class="friends-main-wrapper">
+        <div class="friendslist-main-container">
+            <!-- friends go here -->
+        </div>
+        <div class="favorites-button transit-btn" data-transit="favorites"></div>
+        <img class="footer" src="img/footer-@2x.jpg" />
+    </div>
+    <div class="footer-wrapper">
+        <div class="footer-container">
+            <div class="favorites-button transit-btn" data-transit="favorites"></div>
+            <img class="footer" src="img/footer-@2x.jpg">
+        </div>
+    </div>
+</div>
+<!--                 <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                </fb:login-button>
+                <div class="friends-list">
+                </div> -->
+
+</div> <!-- end screen-main-menu -->
+
+<!-- SHOP SECTION -->
+<div class="transit-link" id="shop-section" data-transit="shop">
+    <div class="shop-title-wrapper">
+        <div class="shop-title">The Bowl Store</div>
+        <div class="shop-text">
+            <p>View our most popular items below</p>
+        </div>
+        <div class="link-box-container">
+            <div class="locations-box store-box-link transit-btn" data-transit="map"><p>STORE LOCATIONS</p></div>
+            <div class="shop-box store-box-link" id="shop-online" data-url="http://www.laphilstore.com/Default.aspx"><p>SHOP ONLINE</p></div>
+            <div class="push"></div>
+        </div>
+    </div>
+    <div class="shop-main-wrapper">
+        <div class="shoplist-container">
+            <div class="store-item-container">
+                <div class="store-item-thumb">
+                    <img src="img/store/store-soundwave-throw.jpg">
+                </div>
+                <div class="store-item-text">
+                    <div class="store-info-title">Soundwave Throw</div>
+                </div>
+            </div>
+            <div class="store-item-container">
+                <div class="store-item-thumb">
+                    <img src="img/store/store-soundwave-shirt.jpg">
+                </div>
+                <div class="store-item-text">
+                    <div class="store-info-title">Soundwave T-Shirt</div>
+                </div>
+            </div>
+            <div class="store-item-container">
+                <div class="store-item-thumb">
+                    <img src="img/store/store-sweatshirt-throw.jpg">
+                </div>
+                <div class="store-item-text">
+                    <div class="store-info-title">Sweatshirt Throw (Black)</div>
+                </div>
+                <div class="store-item-container">
+                    <div class="store-item-thumb">
+                        <img src="img/store/store-sunset-tshirt.jpg">
+                    </div>
+                    <div class="store-item-text">
+                        <div class="store-info-title">Sunset T-Shirt</div>
+                    </div>
+                </div>
+                <div class="store-item-container">
+                    <div class="store-item-thumb">
+                        <img src="img/store/store-sunset-mug.jpg">
+                    </div>
+                    <div class="store-item-text">
+                        <div class="store-info-title">Sunset Mug</div>
+                    </div>
+                </div>
+                <div class="store-item-container">
+                    <div class="store-item-thumb">
+                        <img src="img/store/store-wine-country-throw.jpg">
+                    </div>
+                    <div class="store-item-text">
+                        <div class="store-info-title">Wine Tote Bag</div>
+                    </div>
+                </div>
+                <div class="store-item-container">
+                    <div class="store-item-thumb">
+                        <img src="img/store/store-govino-glasses.jpg">
+                    </div>
+                    <div class="store-item-text">
+                        <div class="store-info-title">Govino Glasses</div>
+                    </div>
+                </div>
+                <div class="store-item-container">
+                    <div class="store-item-thumb">
+                        <img src="img/store/store-hat.jpg">
+                    </div>
+                    <div class="store-item-text">
+                        <div class="store-info-title">Hat</div>
+                    </div>
+                </div>
+                <div class="store-item-container">
+                    <div class="store-item-thumb">
+                        <img src="img/store/store-seat-cushion.jpg">
+                    </div>
+                    <div class="store-item-text">
+                        <div class="store-info-title">Seat Cushion (Silver)</div>
+                    </div>
+                </div>
+                <div class="store-item-container">
+                    <div class="store-item-thumb">
+                        <img src="img/store/store-unisex-tee.jpg">
+                    </div>
+                    <div class="store-item-text">
+                        <div class="store-info-title">Unisex Tee</div>
+                    </div>
+                </div>
+                <div class="store-item-container">
+                    <div class="store-item-thumb">
+                        <img src="img/store/store-triblend-hoodie.jpg">
+                    </div>
+                    <div class="store-item-text">
+                        <div class="store-info-title">Triblend Hoodie</div>
+                    </div>
+                </div>
+            </div><!--end shoplist container-->
+        </div><!--shop main wrapper-->
+    </div><!--end shop section-->
+    <div class="footer-wrapper">
+        <div class="footer-container">
+            <div class="favorites-button transit-btn" data-transit="favorites"></div>
+            <img class="footer" src="img/footer-@2x.jpg">
+        </div>
+    </div>
+</div><!--end main shop section-->
+<!-- Map Section -->
+<div class="transit-link" id="stage-map" data-transit="map">
+    <!--         <img class="mainbg" src="img/starsbg-@2x.jpg"> -->
+    <div class="wrapper" id="map-wrapper">
+        <div id="map-title">MAP</div>
+        <div id="map-directions">TAP TO FILTER BY THESE POPULAR LOCATIONS</div>
+        <div id="map-icon-container">
+            <div class="main-legend" data-mainlegend="parking" id="icon-legend-parking"></div>
+            <div class="main-legend" data-mainlegend="store" id="icon-legend-store"></div>
+            <div class="main-legend" data-mainlegend="firstaid" id="icon-legend-firstaid"></div>
+            <div class="main-legend" data-mainlegend="restrooms" id="icon-legend-restrooms"></div>
+            <div class="main-legend" data-mainlegend="food" id="icon-legend-food"></div>
+            <div class="main-legend" data-mainlegend="accessibility" id="icon-legend-accessibility"></div>
+            <div class="main-legend" data-mainlegend="boxoffice" id="icon-legend-box-office"></div>
+        </div>
+        <div id="map-menu-container">
+            <div class="concerts-nav-btn concerts-btn-selected map-menu-map active-maptab">MAP</div>
+            <div class="concerts-nav-btn map-menu-legend">LEGEND</div>
+        </div>
+    </div> <!-- end wrapper -->
+    <div id="legend-list">
+        <div class="legend-icon" id="atm" data-legend="atm"><img src="img/icon-legend-atm.png" height="26" width="26"><p>ATM</p></div>
+        <div class="legend-icon" data-legend="cart-path"><img src="img/icon-legend-accessible-cart-path.png" height="26" width="26"><p>Accessible Cart Path</p></div>
+        <div class="legend-icon" data-legend="accessibility"><img src="img/icon-legend-accessible-facilities.png" height="26" width="26"><p>Accessible Facilities</p></div>
+        <div class="legend-icon" data-legend="store"><img src="img/icon-legend-the-bowl-store.png" height="26" width="26"><p>The Bowl Store</p></div>
+        <div class="legend-icon" data-legend="boxoffice"><img src="img/icon-legend-box-office.png" height="26" width="26"><p>Box Office</p></div>
+        <div class="legend-icon" data-legend="cushion"><img src="img/icon-legend-cushion-rental.png" height="26" width="26"><p>Cushion Rental</p></div>
+        <div class="legend-icon" data-legend="elevator"><img src="img/icon-legend-escalator.png" height="26" width="26"><p>Elevator</p></div>
+        <div class="legend-icon" data-legend="entrance"><img src="img/icon-legend-entrance-gate.png" height="26" width="26"><p>Entrance Gate</p></div>
+        <div class="legend-icon" data-legend="escalator"><img src="img/icon-legend-escalator.png" height="26" width="26"><p>Escalator</p></div>
+        <div class="legend-icon" data-legend="firstaid"><img src="img/icon-legend-first-aid.png" height="26" width="26"><p>First Aid</p></div>
+        <div class="legend-icon" data-legend="food"><img src="img/icon-legend-foodwine.png" height="26" width="26"><p>Food and Wine</p></div>
+        <div class="legend-icon" data-legend="marquee"><img src="img/icon-legend-marquee.png" height="26" width="26"><p>Marquee</p></div>
+        <div class="legend-icon" data-legend="moving-sidewalk"><img src="img/icon-legend-moving-sidewalk.png" height="26" width="26"><p>Moving Sidewalk</p></div>
+        <div class="legend-icon" data-legend="muse"><img src="img/icon-legend-the-muse.png" height="26" width="26"><p>The Muse</p></div>
+        <div class="legend-icon" data-legend="museum"><img src="img/icon-legend-museum.png" height="26" width="26"><p>Museum</p></div>
+        <div class="legend-icon" data-legend="parknride"><img src="img/icon-legend-parkride.png" height="26" width="26"><p>Park and Ride</p></div>
+        <div class="legend-icon" data-legend="parking"><img src="img/icon-legend-parking.png" height="26" width="26"><p>Parking</p></div>
+        <div class="legend-icon" data-legend="picnic"><img src="img/icon-legend-picnic-areas.png" height="26" width="26"><p>Picnic Areas</p></div>
+        <div class="legend-icon" data-legend="restrooms"><img src="img/icon-legend-restrooms.png" height="26" width="26"><p>Restrooms</p></div>
+        <div class="legend-icon" data-legend="walkway"><img src="img/icon-legend-walkway.png" height="26" width="26"><p>Walkway</p></div>
+    </div>
+    <div class="full-wrapper" id="map-container">
+        <div class="concerts-nav-divider no-margin-bottom"></div>
+        <div id="map-image-container">
+            <!--                     <div id="map-full-image"></div> -->
+            <img id="map-full" src="img/map-full.jpg">
+            <img id="map-blank" src="img/map-components/map-blank.jpg">
+            <!-- <div class="legend-layer-container"> -->
+                <!-- <div class="inner-layer-container"> -->
+                    <img class="legend-layer" data-legend="accessibility" data-mainlegend="accessibility" src="img/map-components/map-accessible.png">
+                    <img class="legend-layer" data-legend="atm" src="img/map-components/map-atm.png">
+                    <img class="legend-layer" data-legend="boxoffice" data-mainlegend="boxoffice" src="img/map-components/map-boxoffice.png">
+                    <img class="legend-layer" data-legend="cart-path" src="img/map-components/map-cartpath.png">
+                    <img class="legend-layer" data-legend="cushion" src="img/map-components/map-cushion.png">
+                    <img class="legend-layer" data-legend="elevator" src="img/map-components/map-elevator.png">
+                    <img class="legend-layer" data-legend="entrance" src="img/map-components/map-entrance.png">
+                    <img class="legend-layer" data-legend="escalator" src="img/map-components/map-escalator.png">
+                    <img class="legend-layer" data-legend="firstaid" data-mainlegend="firstaid" src="img/map-components/map-firstaid.png">
+                    <img class="legend-layer" data-legend="food" data-mainlegend="food" src="img/map-components/map-foodnwine.png">
+                    <img class="legend-layer" data-legend="entrance" src="img/map-components/map-gate.png">
+                    <img class="legend-layer" data-legend="marquee" src="img/map-components/map-marquee.png">
+                    <img class="legend-layer" data-legend="muse" src="img/map-components/map-muse.png">
+                    <img class="legend-layer" data-legend="museum" src="img/map-components/map-museum.png">
+                    <img class="legend-layer" data-legend="parking" data-mainlegend="parking" src="img/map-components/map-parking.png">
+                    <img class="legend-layer" data-legend="parknride" src="img/map-components/map-parknride.png">
+                    <img class="legend-layer" data-legend="picnic" src="img/map-components/map-picnic.png">
+                    <img class="legend-layer" data-legend="restrooms" data-mainlegend="restrooms" src="img/map-components/map-restrooms.png">
+                    <img class="legend-layer" data-legend="walkway" src="img/map-components/map-sidewalk.png">
+                    <img class="legend-layer" data-legend="store" data-mainlegend="store" src="img/map-components/map-store.png">
+                <!-- </div> -->
+            <!-- </div> -->
+        </div>
+    </div> <!-- end full-wrapper -->
+
+<div id="stage-map-legend">
+    <!--         <img class="mainbg" src="img/starsbg-@2x.jpg"> -->
+    <div class="favorites-button transit-btn" data-transit="favorites"></div>
+    <img class="footer" src="img/footer-@2x.jpg">
+    <div class="wrapper" id="map-wrapper">
+        <div id="map-title">MAP</div>
+        <div id="map-directions">TAP TO FILTER BY THESE POPULAR LOCATIONS</div>
+        <div id="map-icon-container">
+            <div id="icon-legend-parking"></div>
+            <div id="icon-legend-store"></div>
+            <div id="icon-legend-firstaid"></div>
+            <div id="icon-legend-restrooms"></div>
+            <div id="icon-legend-food"></div>
+            <div id="icon-legend-accessibility"></div>
+            <div id="icon-legend-box-office"></div>
+        </div>
+        <div id="map-menu-container">
+            <div class="concerts-nav-btn transit-btn map-menu-map" data-transit="map">MAP</div>
+            <div class="concerts-nav-btn concerts-btn-selected map-menu-legend">LEGEND</div>
+        </div>
+    </div> <!-- end wrapper -->
+    <div class="full-wrapper">
+        <div class="concerts-nav-divider no-margin-bottom"></div>
+        <div id="map-image-container">
+            <!--                     <div id="map-full-image"></div> -->
+            <img src="img/map-full.jpg">
+        </div>
+    </div> <!-- end full-wrapper -->
+</div> <!--end stage-map-legend -->
+    <div class="footer-wrapper">
+        <div class="footer-container">
+            <div class="favorites-button transit-btn" data-transit="favorites"></div>
+            <img class="footer" src="img/footer-@2x.jpg">
+        </div>
+    </div>
+</div><!--end stage map section-->
+<!-- Give Section -->
+<div class="give transit-link" id="give" data-transit="give">
+    <!--             <img class="mainbg" src="img/starsbg-@2x.jpg"> -->
+    <div id="give-inner-wrapper">
+    </div> <!-- end screen-main-menu -->
+    <div class="favorites-button transit-btn" data-transit="favorites"></div>
+    <div class="wrapper">
+        <div id="give-title">GIVE</div>
+    </div> <!-- end wrapper -->
+    <div class="full-wrapper give-image-wrapper">
+        <img id="give-image" src="img/give-page-img.jpg">
+    </div>
+        <div id="give-menu">
+            <div class="mainmenu-btn culinary-link" id="culinary-map">MAKE A GIFT NOW</div>
+            <div class="mainmenu-btn culinary-link" id="order-supper">DONOR VALET PARKING</div>
+            <div class="mainmenu-btn culinary-link" id="order-picnic">VOLUNTEER OPPORTUNITIES</div>
+            <div class="mainmenu-btn culinary-link" id="rest-reservations">SPECIAL EVENTS</div>
+            <div class="mainmenu-btn culinary-link" id="fw-more-info">LEARN WAYS TO GIVE</div>
+        </div>
+    <div class="footer-wrapper give-footer">
+        <div class="footer-container">
+            <div class="favorites-button transit-btn" data-transit="favorites"></div>
+            <img class="footer" src="img/footer-@2x.jpg">
+        </div>
+    </div>
+</div> <!-- end give section-->
+
+
+<!--FAVORITES PAGE -->
+<div class="favorites-page transit-link" id="favorites" data-transit="favorites">
+    <!--         <img class="mainbg" src="img/starsbg-@2x.jpg"> -->
+    <img src="img/white-heart-@2x.png" class="favorites-heart" id="favorites-page-heart">
+    <div class="favorites-button"></div>
+    <div class="favorites-title-wrapper">
+        <div class="favorites-title">Favorites</div>
+    </div>
+    <div class="favorites-main-wrapper">
+        <div class="favorites-container">
+        </div><!--end favorites container-->
+    </div><!--favorites main wrapper-->
+    <div class="footer-wrapper">
+        <div class="footer-container">
+            <div class="favorites-button transit-btn" data-transit="favorites"></div>
+            <img class="footer" src="img/footer-@2x.jpg">
+        </div>
+    </div>
+</div> <!-- end stage-concerts -->
+
+<!-- CONTENT ONLY SECTIONS -->
+
+<!-- PARK + RIDE SECTION-->
+<div class="stage-content content-parkandride transit-link" id="park-ride" data-transit="park-ride">
+    <!--         <img class="mainbg" src="img/starsbg-@2x.jpg"> -->
+    <div class="wrapper">
+        <div class="content-title">
+            PARK + RIDE
+        </div>
+    </div>
+    <div class="full-wrapper content-full-wrapper">
+        <img class="content-image" src="img/content-img.jpg">
+    </div>
+    <div class="content-inner-wrapper" id="parkride-container">
+        <div class="content-container">
+
+            <p>• $7 per person round trip when pre-purchased (fees may apply depending on point of purchase)</p>
+
+            <p>• $12 per person when purchased at the lot.</p>
+
+            <p>• Tickets are cash only when purchasing at the lot on the night of the concert. Please bring exact change ($12) and arrive at least 20 minutes early.</p>
+
+            <p>• Passengers with pre-purchased Park & Ride tickets will be given boarding preference, provided they arrive no later than ten minutes prior to their ticketed departure time.</p>
+
+            <p>• For concerts with pre-shows (Grease Sing-A-Long and Sing-A-Long Sound of Music), Park & Ride departure times are based upon the start time of the pre-show, not the concert.</p>
+
+            <p>• Park & Ride tickets are available online until 24 hours prior to the concert, when you select TicketFast delivery (must be able to print tickets; mobile tickets will not be accepted). By phone, please allow two weeks for mailing.</p>
+
+            <p>• Lots and locations subject to change.</p>
+            <div class="content-link-box content-link" data-url="http://www.hollywoodbowl.com/visit/getting-to-the-bowl/park-and-ride">Learn More</div>
+        </div><!--end container-->
+    </div>
+    <div class="footer-wrapper">
+        <div class="footer-container">
+            <div class="favorites-button transit-btn" data-transit="favorites"></div>
+            <img class="footer content-footer" src="img/footer-@2x.jpg">
+        </div>
+    </div>
+</div> <!--end park-ride -->
+
+<!-- SHUTTLE SECTION -->
+<div class="stage-content transit-link" id="shuttle" data-transit="shuttle">
+    <!--         <img class="mainbg" src="img/starsbg-@2x.jpg"> -->
+    <div class="wrapper">
+        <div class="content-title">
+            SHUTTLE
+        </div>
+    </div>
+    <div class="full-wrapper content-full-wrapper">
+        <img class="content-image" src="img/content-img.jpg">
+    </div>
+    <div class="content-inner-wrapper">
+        <div class="content-container">
+            <p>General Information</p>
+            <p>Parking: FREE*</p>
+
+            <p>Round-trip cost: only $6 per person. Available in advance through Ticketmaster (available online and by phone until two weeks prior to concert, convenience charges apply).* Cash only when purchasing at the lot.</p>
+
+            <p>Lots are wheelchair accessible.</p>
+
+            <p>*Except Hollywood & Highland</p>
+
+            <p>Departure Times</p>
+            <p>The first departure times for the Bowl Shuttle from each of the lots listed below are as follows:</p>
+            <p>• 1:00 PM departure from lot</p>
+            <p>• The last bus departs from the Hollywood Bowl during Playboy Jazz Festival: One early departure at 8:30 PM. Next departures will start at the end of the show.</p>
+
+            <div class="content-link-box content-link" data-url="http://www.hollywoodbowl.com/visit/getting-to-the-bowl/bowlbus-shuttle">Learn More</div>
+        </div><!--end container-->
+    </div>
+    <div class="footer-wrapper">
+        <div class="footer-container">
+            <div class="favorites-button transit-btn" data-transit="favorites"></div>
+            <img class="footer" src="img/footer-@2x.jpg">
+        </div>
+    </div>
+</div> <!--end shuttle -->
+
+<!-- METRO SECTION -->
+<div class="stage-content transit-link" id="metro" data-transit="metro">
+    <!--         <img class="mainbg" src="img/starsbg-@2x.jpg"> -->
+    <div class="wrapper">
+        <div class="content-title">
+            METRO
+        </div>
+    </div>
+    <div class="full-wrapper content-full-wrapper">
+        <img class="content-image" src="img/content-img.jpg">
+    </div>
+    <div class="content-inner-wrapper">
+        <div class="content-container">
+            <p>LA METRO SERVING THE BOWL:</p>
+
+            <p>Bus 156</p>
+            <p>From San Fernando Valley or Los Angeles.</p>
+
+            <p>Bus 222</p>
+            <p>From West Hills, Burbank, and Hollywood.</p>
+
+            <p>Metro Red Line (Hollywood & Highland Stop)</p>
+            <p>You can transfer to the Bowl Shuttle FREE with a roundtrip Metro Rail Red Line ticket or Metro Pass. This applies to our Hollywood and Highland and Ventura Bowl Shuttle Lots only.</p>
+
+            <p>Returning passengers without a Metro Red Line roundtrip ticket or Metro Pass may pay the base fare and purchase a transfer to continue their trip on other Metro services.</p>
+
+            <div class="content-link-box content-link" data-url="http://www.hollywoodbowl.com/visit/getting-to-the-bowl/other-options#metro">Visit LA Metro</div>
+            <div class="content-link-box content-link">Call 323.GO.METRO (323.466.3876)</div>
+        </div><!--end container-->
+    </div>
+    <div class="footer-wrapper">
+        <div class="footer-container">
+            <div class="favorites-button transit-btn" data-transit="favorites"></div>
+            <img class="footer" src="img/footer-@2x.jpg">
+        </div>
+    </div>
+</div> <!--end shuttle -->
+
+<!-- PARKING SECTION -->
+<div class="stage-content transit-link" id="shuttle" data-transit="parking">
+    <!--         <img class="mainbg" src="img/starsbg-@2x.jpg"> -->
+    <div class="wrapper">
+        <div class="content-title">
+            PARKING
+        </div>
+    </div>
+    <div class="full-wrapper content-full-wrapper">
+        <img class="content-image" src="img/content-img.jpg">
+    </div>
+    <div class="content-inner-wrapper">
+        <div class="content-container">
+            <p>GENERAL PARKING INFORMATION</p>
+            <div class="content-link-box content-link" data-url="http://www.hollywoodbowl.com/visit/accessibility/accessible-parking">Parking Info for patrons with Disabilities</div>
+
+            <p>Parking at the Bowl is extremely limited. In addition to Lot A (the main Bowl parking lot), there are three other on-site parking lots that serve Hollywood Bowl patrons. Parking lots open 4 hours prior to the start of the concert.</p>
+
+            <p>Lot B (the Odin parking lot), located on the west side of Highland Avenue, is a tiered parking lot. On the top tier, there are accessible parking spaces that are near the accessible pathway to the Box Office Plaza. Electric cart service is also available.</p>
+
+            <p>Lot C (North Fairfield parking lot) is located on the east side of Highland Avenue. Lot D (South Fairfield parking lot), located on the east side of Highland Avenue, contains group picnic areas.</p>
+
+            <p>LA PHIL PRESENTED EVENTS</p>
+            <p>Parking Prices: $18-$50</p>
+
+            <p>Lot A: $22 ($21 in advance)</p>
+
+            <p>Lot B: $20 ($19 in advance)</p>
+
+            <p>Lot C & D: $18</p>
+
+            <p>Buses & Limos: $45</p>
+
+            <p>Motorcycles: $10</p>
+
+            <p>LEASE EVENTS</p>
+            <p>Parking Prices: $23-$50</p>
+
+            <p>Gold and Preferred: $50</p>
+
+            <p>Lower & Upper Terrace: $27 ($26 in advance)</p>
+
+            <p>Lot B: $25 ($24 in advance)</p>
+
+            <p>Lot C & D: $23</p>
+
+            <p>Buses & Limos: $50</p>
+
+            <p>Motorcycles: $10</p>
+
+
+            <p>Arrive early to ensure availability. All parking lots are stack parked and there is no early exit.</p>
+
+            <p>For additional parking information and pre-concert purchase please call 323.850.2000. On the day of the concert parking is available for purchase at the lot, only.</p>
+
+        </div><!--end container-->
+    </div>
+    <div class="footer-wrapper">
+        <div class="footer-container">
+            <div class="favorites-button transit-btn" data-transit="favorites"></div>
+            <img class="footer" src="img/footer-@2x.jpg">
+        </div>
+    </div>
+</div> <!--end parking -->
+
+<!-- ACCESSIBILITY SECTION -->
+<div class="stage-content transit-link" id="accessibility" data-transit="accessibility">
+    <!--         <img class="mainbg" src="img/starsbg-@2x.jpg"> -->
+    <div class="wrapper">
+        <div class="content-title">
+            ACCESSIBILITY
+        </div>
+    </div>
+    <div class="full-wrapper content-full-wrapper">
+        <img class="content-image" src="img/content-img.jpg">
+    </div>
+    <div class="content-inner-wrapper">
+        <div class="content-container">
+            <p>The Hollywood Bowl is committed to making its concerts accessible to all who wish to enjoy live music.</p>
+
+            <p>ACCESSIBLE SEATING FOR GUESTS WITH DISABILITIES</p>
+            <p>A minimum of 196 wheelchair, semi-ambulatory, and companion tickets are available throughout the Hollywood Bowl.</p>
+
+            <p>The Americans with Disabilities Act and several California State Laws were enacted to promote equal access for everyone. The Hollywood Bowl strives to provide accessible seating to our patrons needing specific accommodations and to ensure that wheelchair-accessible locations are reserved for guests who require such an accommodation.</p>
+
+            <p>The Hollywood Bowl will provide full wheelchair accessible seating in spaces or locations designated as such and no permanent fixed chair will be provided for these locations.</p>
+
+            <p>Accessible seating is available to those with mobility disabilities who require accessible seating because of their disability, at most price levels. This includes individuals who use wheelchairs, those who use other mobility devices, and people who cannot climb steps or walk long distances because of significant arthritis, or severe respiratory, circulatory, or cardiac conditions. Individuals who, because of their disability, cannot sit in a straight-back chair or those whose service dogs cannot fit under a non-accessible seat or lie safely in the aisle are also permitted to purchase accessible seats.</p>
+
+            <p>Individuals purchasing a ticket for an accessible seat may purchase up to three (3) additional seats for their companions in the same row and that are contiguous with the accessible seat. If contiguous seats have already been sold and are not available, the Hollywood Bowl will offer other seats as close to the accessible seats as possible.</p>
+
+            <div class="content-link-box content-link" data-url="http://www.hollywoodbowl.com/visit/accessibility">Learn More</div>
+
+            <p>TICKET-PURCHASING OPTIONS</p>
+            <p>Department 12 of the Hollywood Bowl Box Office handles ticketing exclusively for patrons with disabilities. These tickets are also available through Ticketmaster (with a service charge). Phone: 323.850.2125 or Audience Services at 213.850.2000.</p>
+
+            Learn More: http://www.hollywoodbowl.com/visit/accessibility/tickets-patrons-disabilities
+
+            <p>PARKING</p>
+            <p>Accessible parking is available in two locations (at two price levels) at the Hollywood Bowl: at the West Gate (very limited availability), and in the Odin Street Lot. Both parking lot entrances are off the west-side of Highland Avenue. Both lots include spaces for rear-loading and side-loading vans, and have accessible paths of travel into seating areas. Parking can be purchased through Accessibility Services (323.850.2125). All Bowl parking is very limited, including accessible parking which frequently sells out in advance. See next section for more options.</p>
+
+            <div class="content-link-box content-link" data-url="http://www.hollywoodbowl.com/visit/accessibility/accessible-parking">Learn More</div>
+
+            <p>ALTERNATE TRANSPORTATION</p>
+            <p>Parking at the Bowl is extremely limited. More than one-third of our audience uses Park & Ride and Shuttle service as transportation to the Bowl. There are 15 Park & Ride locations and three Shuttle lots in operation for most Bowl concerts. All Park & Ride lots use accessible buses.</p>
+
+            <p>Buses discharge riders at the Plaza entrance. There is an accessible path of travel from the bus drop-off location to the Plaza which includes the Bowl Box Office, concessions, The Bowl Store, and elevators to accessible seating locations.</p>
+
+            <p>At the end of the evening, BowlExpress buses will pick up patrons in the plaza area, upon request to the Parking Operations Staff. This insures that one no longer need descend the hill and cross Highland Avenue to reach buses for the return trip.</p>
+
+            <p>Park & Ride tickets may be purchased in advance through Accessibility Services (323.850.2125) when you place your ticket order, or through Ticketmaster or the Box Office. Holders of pre-purchased tickets are given priority when boarding the bus. Shuttle tickets may also be purchased in advance.</p>
+
+            <p>CART SERVICE</p>
+            <p>Motorized cart service is available to assist patrons with limited mobility. One station is located near the accessible Odin Lot parking. Post-concert use of the cart service will involve substantial delays, as the carts cannot readily make return trips against the flow of traffic.</p>
+
+            <p>DINING AT THE BOWL</p>
+            <p>Among the many dining options at the Bowl, there are accessible picnic areas off the 3rd Promenade, and on the roof of the Box Office building, accessed via the elevator from the Plaza.</p>
+
+            <p>There are also food and drink concessions on the way to your seats at either entrance to the Bowl. Concessions in the Plaza and on the 3rd Promenade have counters at accessible heights. Not all drinking fountains at the Bowl have been renovated. However, cups and water are available at all concession stands.</p>
+
+            <p>RESTROOMS</p>
+            <p>The restroom facility adjacent to the Odin Street Parking Lot path is accessible, as is the restroom adjacent to the West Gate entrance. The restrooms off the 3rd Promenade are now accessible as well. There are also accessible restrooms located in the Museum and off the Patio Restaurant.</p>
+
+            <!-- TO DO Links to Map page with accessible restrooms layer active -->
+            <div class="content-link-box transit-btn content-link" data-transit="map" >Learn More</div>
+
+            <p>TELEPHONES</p>
+            <p>Accessible telephones with volume control are located near both entrances to the bowl. A public TDD/TTY is located in the Plaza.</p>
+
+            <p>SIGN LANGUAGE INTERPRETER</p>
+            <p>After purchasing tickets, a request for a sign language interpreter can be facilitated through Accessibility Services (TTY 323.850.2040). 72-hour advance notice is requested.</p>
+
+            <p>ASSISTIVE LISTENING DEVICES</p>
+            <p>Headsets are available free of charge (with a deposit) at the House Manager's Office; ask an usher for assistance.</p>
+
+            <div class="content-link-box content-link" data-url="http://www.hollywoodbowl.com/visit/accessibility">Learn More About Accessibility</div>
+
+
+        </div><!--end container-->
+    </div>
+    <div class="footer-wrapper">
+        <div class="footer-container">
+            <div class="favorites-button transit-btn" data-transit="favorites"></div>
+            <img class="footer" src="img/footer-@2x.jpg">
+        </div>
+    </div>
+</div> <!--end shuttle -->
+
+<!-- HOUSE RULES SECTION -->
+<div class="stage-content transit-link" id="rules" data-transit="rules">
+    <!--         <img class="mainbg" src="img/starsbg-@2x.jpg"> -->
+    <div class="wrapper">
+        <div class="content-title">
+            HOUSE RULES
+        </div>
+    </div>
+    <div class="full-wrapper content-full-wrapper">
+        <img class="content-image" src="img/content-img.jpg">
+    </div>
+    <div class="content-inner-wrapper">
+        <div class="content-container">
+            <p>OPEN THE GATES!</p>
+            <p>Gate Open Times (barring stage delays):</p>
+            <p>• 6:00PM for 8:00 concerts on Tuesday, Wednesday, and Thursday</p>
+            <p>• 5:30PM for 8:00 concerts on Friday and Saturday</p>
+            <p>• 4:30PM for 7:00 concerts of Saturday</p>
+            <p>• 5:00PM for 7:30 concerts on Sunday</p>
+
+            <p>SAFETY FIRST</p>
+            <p>Please be aware that for the security of our guests, we search all individuals and items before entering the auditorium areas.</p>
+
+            <p>QUIET, PLEASE!</p>
+            <p>As a courtesy to the musicians and the surrounding audience, please keep noise to a minimum during the performance. Such noise would include: securing/opening all bottles, coughing, unwrapping candy, talking, answering your phone, making phone calls, etc.</p>
+
+            <p>PLEASE REFRAIN FROM USING ELECTRONIC DEVICES DURING THE PERFORMANCE.</p>
+
+            <p>This includes mobile phones, pagers, watch alarms, portable devices and all video-game devices – anything that will emit light or make noise.</p>
+
+            <p>CAMERA POLICY</p>
+            <p>Flash photography, professional camera or recording equipment and the following items are prohibited:</p>
+            <p>• Cameras with detachable lenses</p>
+            <p>• Any form of camera stand (monopods included)</p>
+            <p>• Selfie sticks</p>
+            <p>• Audio/video recording devices</p>
+            <p>• Laser pointers</p>
+            <p>• Drones</p>
+
+            <p>LATE SEATING</p>
+            <p>As a courtesy to the performers and the audience, latecomers will not be seated until the earliest appropriate opportunity in the concert at the discretion of management.</p>
+
+            <p>Please note that certain programs are performed without intermission. Therefore, no late seating can be offered at those concerts.</p>
+
+            <p>BRINGING CHILDREN</p>
+            <p>There is no minimum age for admittance to the Hollywood Bowl. We do ask, however, that everyone, regardless of age, be able to sit quietly through a two-hour (or longer) concert without disrupting others. Ushers may ask parents whose children are noisy to remove them from the theater. If there is repeated disruption, we reserve the right to revoke admission and refund your ticket price, excluding service charges.</p>
+
+            <p>Regular Bowl concerts are not intended for young children. In any case, children age 2 and up must have a regular-price ticket to enter the theater and must sit in the seat indicated. Children under age 2 do not require a ticket. Management may require baby strollers and carrying devices to be stored at the Operations Office.</p>
+
+            <p>Instead of evening concerts, we strongly advise that children 3 to 9 years old attend "SummerSounds: World Music for Kids at the Hollywood Bowl."</p>
+
+            <p>More Information:</p>
+
+            <p>Summer Sounds: http://www.hollywoodbowl.com/tickets/summersounds-2016
+                Call 323.850.2000: tel://3238502000</p>
+
+            <p>SMOKING</p>
+            <p>By law (LACC 17.04.645), smoking is not permitted on the Hollywood Bowl grounds, except in designated areas. Violators are subject to removal. Smoking in any other areas could lead to arrest and would be considered a misdemeanor. Please refer to the map below for the areas at the Bowl designated for smoking.</p>
+
+            <img src="img/smoking-map.jpg">
+
+            <p>RAIN CHECKS</p>
+            <p>The long standing Bowl tradition is that the "show must go on," so there are no rained out concerts and no rain checks will be issued. Please note that, for safety reasons, umbrellas are not permitted at the Hollywood Bowl.</p>
+
+            <p>FOOD, DRINK, & CONTAINERS</p>
+            <p>You may bring food and drink to the Hollywood Bowl.</p>
+
+            <p>You can also bring wine bottles, wine glasses and beer bottles inside.</p>
+
+            <p>No kegs of any kind are allowed at the Hollywood Bowl.</p>
+
+            <p>Large containers, picnic baskets, or coolers measuring more than 15" wide, 15" high, or 22" long will not be permitted past the ticket gate. All containers, picnic baskets and coolers must be able to fit under the seat or within the box. For the safety of all our patrons and to comply with fire regulations, the aisles and walkways of the Hollywood Bowl must be kept clear at all times.</p>
+
+            See Info For Lease Events: http://www.hollywoodbowl.com/tickets/series-detail/lease-events/lease-event-theater-policies
+
+            <p>CANDLES</p>
+            <p>The Los Angeles City Fire Department has granted permission to use candles that meet very specific fire safety requirements in the Box Seat sections only. Approved candles are sold at the Bowl Store. If the candle device consists of more than one part, the parts must be secured together so that the candle device remains intact when tipped over. The tip of the flame must not be any closer than 2 inches from the top of the container.</p>
+
+            <p>TAILGATING</p>
+            <p>Tailgating in the parking lots is not permitted.</p>
+
+            <div class="content-link-box content-link" data-url="http://www.hollywoodbowl.com/visit/getting-to-the-bowl/bowlbus-shuttle">Learn More</div>
+        </div><!--end container-->
+    </div>
+    <div class="footer-wrapper">
+        <div class="footer-container">
+            <div class="favorites-button transit-btn" data-transit="favorites"></div>
+            <img class="footer" src="img/footer-@2x.jpg">
+        </div>
+    </div>
+</div> <!--end rules -->
+
+<!--BOX OFFICE-->
+<div class="stage-content transit-link" id="box-office" data-transit="box-office">
+    <!--         <img class="mainbg" src="img/starsbg-@2x.jpg"> -->
+    <div class="wrapper">
+        <div class="content-title">
+            BOX OFFICE
+        </div>
+    </div>
+    <div class="full-wrapper content-full-wrapper">
+        <img class="content-image" src="img/content-img.jpg">
+    </div>
+    <div class="content-inner-wrapper">
+        <div class="content-container">
+            <p>Starting May 1, 2016 From May 1 to May 8: </p>
+            <p>Open 10am - 6pm</p>
+
+            <p>Beginning May 10: </p>
+            <p>Open 12pm - 6pm (Tues - Sun)</p>
+
+            <p>The box office remains open through intermission for all concerts through August 3, 2016.</p>
+
+            <p>After November 1, 2016:</p>
+            <p>The box office is closed except for the day of the concerts or the day a new concert goes on sale.</p>
+
+        </div><!--end container-->
+    </div>
+    <div class="footer-wrapper">
+        <div class="footer-container">
+            <div class="favorites-button transit-btn" data-transit="favorites"></div>
+            <img class="footer" src="img/footer-@2x.jpg">
+        </div>
+    </div>
+</div> <!--end box office -->
+
+<!--VENUE-->
+<div class="stage-content transit-link" id="venue" data-transit="venue">
+    <!--         <img class="mainbg" src="img/starsbg-@2x.jpg"> -->
+    <div class="wrapper">
+        <div class="content-title">
+            VENUE
+        </div>
+    </div>
+    <div class="full-wrapper content-full-wrapper">
+        <img class="content-image" src="img/content-img.jpg">
+    </div>
+    <div class="content-inner-wrapper">
+        <div class="content-container">
+            <p>One of the largest natural amphitheaters in the world, with a seating capacity of nearly 18,000, the Hollywood Bowl has been the summer home of the Los Angeles Philharmonic since its official opening in 1922. In February 2016, the Hollywood Bowl was named Best Major Outdoor Concert Venue for the twelfth year in a row at the 27th Annual Pollstar Concert Industry Awards. </p>
+
+            <p>A Los Angeles County park, the venue offers something for everyone, showcasing artists in many genres: classical, pops, jazz, and world music, with spectacular firework displays. Sinatra, Pavarotti, Horowitz, Heifetz, Rubinstein: they all played the Hollywood Bowl. So did Leonard Bernstein and The Beatles. Baryshnikov has danced here. Nat “King” Cole, Billie Holiday, Judy Garland, and Elton John have headlined star-studded shows at the Bowl.</p>
+
+            <p>Picnicking and food are also beloved Bowl traditions, and this summer Hollywood Bowl Food + Wine, led by James Beard Award-winning chef Suzanne Goin and wine director Caroline Styne, refresh the experience with new tastes. </p>
+
+            <p>For millions of music lovers across Southern California, the Hollywood Bowl is synonymous with summer.</p>
+        </div><!--end container-->
+    </div>
+    <div class="footer-wrapper">
+        <div class="footer-container">
+            <div class="favorites-button transit-btn" data-transit="favorites"></div>
+            <img class="footer" src="img/footer-@2x.jpg">
+        </div>
+    </div>
+</div> <!--end box office -->
+
+<!--LA PHIL-->
+<div class="stage-content transit-link" id="la-phil" data-transit="la-phil">
+    <!--         <img class="mainbg" src="img/starsbg-@2x.jpg"> -->
+    <div class="wrapper">
+        <div class="content-title">
+            LOS ANGELES PHILHARMONIC
+        </div>
+    </div>
+    <div class="full-wrapper content-full-wrapper">
+        <img class="content-image" src="img/content-img.jpg">
+    </div>
+    <div class="content-inner-wrapper">
+        <div class="content-container">
+            <p>Founded in 1919, the Los Angeles Philharmonic makes its summer home at the Hollywood Bowl. Under the vibrant leadership of Music & Artistic Director Gustavo Dudamel, the LA Phil presents an inspiring array of music from all genres – more than 250 concerts annually at the Bowl and Walt Disney Concert Hall, its other iconic venue. </p>
+
+            <p>The LA Phil aims to enrich and transform lives through music, with a robust mix of artistic, education, and community programs. One of the world’s preeminent orchestras, the Los Angeles Philharmonic founds its offerings upon orchestral concerts, but also presents chamber and Baroque music, organ and celebrity recitals, new music, jazz, world music, and pop. The orchestra’s involvement with Los Angeles also extends far beyond symphony concerts in a concert hall, with performances in schools, churches, and neighborhood centers of a vastly diverse community.</p>
+
+        </div><!--end container-->
+    </div>
+    <div class="footer-wrapper">
+        <div class="footer-container">
+            <div class="favorites-button transit-btn" data-transit="favorites"></div>
+            <img class="footer" src="img/footer-@2x.jpg">
+        </div>
+    </div>
+</div> <!--end LA PHIL -->
+
+<!--DUDAMEL-->
+<div class="stage-content transit-link" id="dudamel" data-transit="dudamel">
+    <!--         <img class="mainbg" src="img/starsbg-@2x.jpg"> -->
+    <div class="wrapper">
+        <div class="content-title">
+            GUSTAVO DUDAMEL
+        </div>
+    </div>
+    <div class="full-wrapper content-full-wrapper">
+        <img class="content-image" src="img/content-img.jpg">
+    </div>
+    <div class="content-inner-wrapper">
+        <div class="content-container">
+            <p>As an internationally renowned symphonic and operatic conductor, Gustavo Dudamel is motivated by a profound belief in music’s power to unite and inspire. He currently serves as Music & Artistic Director of the Los Angeles Philharmonic and Music Director of the Simón Bolívar Symphony Orchestra of Venezuela, and the impact of his leadership extends from the greatest concert stages to classrooms, cinemas, and innovative digital platforms around the world. Dudamel also appears as guest conductor with some of the world’s most famous musical institutions.</p>
+             
+            <p>As he enters his eighth season as Music & Artistic Director of the Los Angeles Philharmonic, Dudamel’s contract has been extended to the end of the 2021/2022 season. At his initiative, the Los Angeles Philharmonic has dramatically expanded the scope of its community outreach programs, including most notably the creation of Youth Orchestra Los Angeles (YOLA), influenced by the philosophy of Venezuela’s admired El Sistema, which encourages social development through music. With YOLA and diverse local educational initiatives, Dudamel brings music to children in underserved communities of Los Angeles.</p>
+
+        </div><!--end container-->
+    </div>
+    <div class="footer-wrapper">
+        <div class="footer-container">
+            <div class="favorites-button transit-btn" data-transit="favorites"></div>
+            <img class="footer" src="img/footer-@2x.jpg">
+        </div>
+    </div>
+</div> <!--end LA PHIL -->
+
+<!--ORCHESTRA-->
+<div class="stage-content transit-link" id="orchestra" data-transit="orchestra">
+    <!--         <img class="mainbg" src="img/starsbg-@2x.jpg"> -->
+    <div class="wrapper">
+        <div class="content-title">
+            HB ORCHESTRA
+        </div>
+    </div>
+    <div class="full-wrapper content-full-wrapper">
+        <img class="content-image" src="img/content-img.jpg">
+    </div>
+    <div class="content-inner-wrapper">
+        <div class="content-container">
+
+            <p>Musicians have been performing at the Hollywood Bowl since its inception in 1922. In 2008, Thomas Wilkins began his appointment as Principal Guest Conductor of the Hollywood Bowl Orchestra. Wilkins, committed to promoting a life-long enthusiasm for music, is an audience favorite whenever he conducts. In June 2014 he became Principal Conductor of the Hollywood Bowl Orchestra, in which position he continues to lead the ensemble each summer in a diverse range of concerts at the fabled outdoor venue.</p>
+
+            <p>For the last two decades, Hollywood Bowl Orchestra concerts have featured an incredible variety of distinguished artists from all genres of music and the world of entertainment. From Mozart to Motown, the repertoire of the Hollywood Bowl Orchestra is as diverse as Hollywood itself. In a single season, the orchestra will perform everything from Broadway favorites to film music, pop music to jazz, and classical music to world premieres by living composers. In essence, the Hollywood Bowl Orchestra does it all.</p>
+
+        </div><!--end container-->
+    </div>
+    <div class="footer-wrapper">
+        <div class="footer-container">
+            <div class="favorites-button transit-btn" data-transit="favorites"></div>
+            <img class="footer" src="img/footer-@2x.jpg">
+        </div>
+    </div>
+</div> <!--end LA PHIL -->
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1114691675239519',
+      xfbml      : true,
+      version    : 'v2.6'
+    });
+  };
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+    </script>
+<!-- <script type="text/javascript" src="cordova.js"></script>  Automatically injected into project at runtime for latest version -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://code.jquery.com/pep/0.4.1/pep.js"></script>
+<script type="text/javascript" src="js/jquery.transit.min.js"></script>
+<script type="text/javascript" src="js/moment.js"></script>
+<script type="text/javascript" src="js/moment-timezone.js"></script>
+<script type="text/javascript" src="js/Modernizr.js"></script>
+<script type="text/javascript" src="js/nprogess.js"></script>
+<script type="text/javascript" src="js/hammer.min.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+
+<script type="text/javascript">
+
+    // Trigger finish when page fully loaded
+    jQuery(window).load(function () {
+        $('#load-screen').transition({ opacity: 0 }, {duration: 50, complete: function() {
+            $(this).css("display", "none")
+        }});
+        NProgress.start();
+        var interval = setInterval(function() { NProgress.inc(); }, 200);
+        
+        $.when(ajaxCall()).done(function(){
+            clearInterval(interval);
+            NProgress.done();
+        });
+    });
+
+    // Trigger bar when exiting the page
+    jQuery(window).unload(function () {
+        NProgress.start();
+    });
+</script>
+
+<script type="text/javascript">
+        app.initialize();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1206 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+/* ---------- RESET --------- */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+html {
+    overflow: hidden;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* ----------------------------- */
+
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+
+body {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    background-attachment:fixed;
+    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    font-size:1em;
+    height:100%;
+    margin:0px;
+    padding: 0;
+    text-transform:uppercase;
+    width:100%;
+    color: #FFF;
+    overflow: hidden;
+}
+/* ---------- GENERAL---------- */
+.push {
+    clear: both;
+}
+.stage {
+    height: 100%;
+    overflow: hidden;
+}
+/* ---------- TOP-BAR --------- */
+.top-bar {
+    width: 100%;
+    height: 64px;
+}
+
+/* ---------- Wrapper ---------- */
+
+.wrapper {
+    position: relative;
+    margin: 0 auto;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+.head-wrapper {
+    position: relative;
+    margin: 0 auto;
+    box-sizing: border-box;
+    z-index: 1;
+    width: 100%;
+    border-bottom: 1px solid #FFF;
+}
+
+/* ---------- Load Screen ------- */
+#load-screen {
+   position: fixed;
+   left: 0px;
+   top: 0px;
+   width: 100%;
+   height: 100%;
+   z-index: 9999;
+   background: center no-repeat #fff;
+}
+.inner-load-screen {
+   position: fixed;
+   text-align: center;
+   color: black;
+   left: 0px;
+   top: 0px;
+   width: 100%;
+   height: 100%;
+   z-index: 9999;
+   background: center no-repeat #fff;
+}
+.inner-load-screen p {
+    top: 50%;
+}
+/* ---------- Main Menu ---------- */
+
+#stage-mainmenu{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+/*    display: none;*/
+}
+
+.mainbg {
+   position: absolute;
+   bottom: 0;
+   width: 100%;
+   z-index: 0;
+}
+#stage-mainmenu .main-menu-block {
+    position: relative;
+    margin: 0 auto;
+    box-sizing: border-box;
+    z-index: 1;
+    padding-bottom: 30px;
+}
+
+.main-logo {
+    position: relative;
+    top: 0px;
+}
+
+.upcoming-show {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    text-align: center; 
+    text-transform: none;     
+}
+
+#upcoming-show-text {
+    padding-bottom: 5px;       
+}
+
+.featured-text {
+    margin: 0px;
+    font-size: 20px;
+}
+
+.featured-date {
+    color: #ffdd00;
+    font-size: 12px;
+    margin-top: 6px;
+    text-transform: uppercase;
+    letter-spacing: 1px; 
+}
+
+.featured-show-btn {
+    display: inline-block;
+    padding: 8px 30px;
+    border: 2px solid #FFF;
+}
+#stage-mainmenu .arrow-up {
+    position: absolute;
+    background-image: url("../img/icon-arrow-up-2x.png");
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 12px;
+    background-size: 30px 12px;
+    z-index: 2;
+    left: 50%;
+    margin-left: -15px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+#stage-mainmenu .arrow-down {
+    position: absolute;
+    background-image: url("../img/icon-arrow-down-2x.png");
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 12px;
+    background-size: 30px 12px;
+    z-index: 2;
+    left: 50%;
+    margin-left: -15px;
+    bottom: 13px;
+}
+.main-menu-wrapper {
+    color: #ec008c;
+    font-size: 24px;
+    text-align: center;
+    overflow-y: auto;
+    width: 100%;
+    padding: 0px 30px;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 27px;
+}
+
+.mainmenu-btn {
+    padding: 10px 0px;
+    background: #FFF;
+    margin: 0 auto 4px auto;
+}
+.submenu-btn {
+    width: 290px;
+    font-size: 14px;
+    padding: 7px 0 7px 0;
+    background: #FFF;
+    margin: 0 auto 4px auto;
+}
+.submenu {
+    opacity: 0;
+}
+.subsubmenu-btn {
+   width: 260px;
+   font-size: 14px;
+   padding: 7px 0 7px 0;
+   background: #FFF;
+   margin: 0 auto 4px auto;
+}
+.active {
+    background-color: #ec008c;
+    color: #FFF;
+}
+#social-media-links {
+    height: 28px;
+    padding: 0;
+}
+
+/* ---------- Concerts ---------- */
+
+#stage-concerts {
+    position: absolute;
+    display: none;
+}
+
+/*#concerts-wrap{
+    width: 100% !important;
+    border-bottom: 1px solid #FFF;
+    margin-bottom: 10px;
+}*/
+
+.back-btn {
+    width: 12px;
+    height: 28px;
+    position: absolute;
+    background: url('../img/back-button-@2x.png') no-repeat;
+    top: 4%;
+    left: 4%;
+    z-index: 5;
+}
+
+.concerts-title {
+    font-size: 30px;
+    width: 100%;
+    padding-top: 37px;
+    margin-bottom: 15px;
+    text-align: center;
+    letter-spacing: .1em;
+}
+
+.concerts-nav {
+    width: 281px;
+    margin: 0 auto 0px auto;
+    color: #ec008c;
+}
+
+.concerts-nav-btn {
+    width: 76px;
+    padding: 12px 0 12px 0;
+    display: inline-block;
+    background: #FFF;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.concerts-btn-date, .concerts-btn-genre {
+    margin-right: 21px;
+}
+
+.concerts-btn-selected {
+    padding-bottom: 25px;
+    border: #FFF solid 1px;
+    border-bottom: transparent;
+    background: transparent;
+    color: #FFF;
+}
+
+.full-wrapper {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    z-index: 1;
+
+}
+.concerts-date-head {
+    padding: 10px 0px 10px 10px;
+    background: #f9f9f9;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    color: #000;
+    margin-bottom: 0;
+    margin-top: 0;
+    text-transform: none;
+}
+
+.concerts-feed-item {
+    width: 100%;
+    height: 125px;
+    border-bottom: 1px solid #FFF;
+    border-top: 3px solid #FFF;
+}
+.concerts-feed-item#concert-0 {
+    border-top: 2px solid #FFF;
+}
+
+.concerts-feed-thumbnail {
+    height: inherit;
+    width: 136px;
+    float: left;
+}
+
+.concerts-feed-thumbnail img {
+    width: 100%;
+    height: 100%;
+}
+
+.concerts-feed-info {
+    height: inherit;
+    background: #FFF;
+    color: #000;
+    overflow: hidden;
+    position: relative;
+}
+
+.concerts-feed-info-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #000;
+    padding: 16px 34px 0px 16px;
+    margin-bottom: 9px;
+}
+
+.concerts-feed-info-dates {
+    font-size: 12px;
+    color: #6a6a6a;
+    padding: 0px 34px 0px 16px;
+    margin-bottom: 4px;
+}
+
+.buy-tickets {
+    width: 100%;
+    height: 20px;
+    background-color: black;
+    position: absolute;
+    bottom: 0;
+}
+
+.buy-tickets p {
+    color: white;
+    position: relative;
+    margin: 0 0 0 15px;
+}
+
+.concerts-detail-screen {
+    width: 100%;
+}
+
+#concerts-detail-title {
+    padding-left: 10px;
+    padding-top: 10px;
+    margin-bottom: 6px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: none;
+}
+
+#concerts-detail-date {
+    font-size: 10px;
+    padding-left: 10px;
+    letter-spacing: 1px;
+    text-transform: none;
+    margin-bottom: 10px;
+}
+
+.concerts-feed-arrow {
+    width: 11px;
+    height: 19px;
+    background-image: url('../img/icon-arrow-@2x.png');
+    background-repeat: no-repeat;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -11px;
+    background-size: cover;
+}
+
+#stage-concert-detail {
+    position: absolute;
+    height: 100%;
+    display: none;
+}
+/*.featured-concert-detail {
+    display: none;
+}*/
+.no-margin-bottom {
+    margin-bottom: 0px;
+}
+
+#concert-detail-image {
+    width: 100%;
+    vertical-align: middle;
+    border-bottom: 1px solid #FFF;
+}
+
+.concerts-full-wrapper {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    z-index: 1;
+}
+#concert-table {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    z-index: 1;
+    overflow-y: scroll;
+}
+#concerts-detail-full-wrapper {
+    position: absolute;
+    display: none;
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    z-index: 1;
+}
+#concerts-featured-full-wrapper {
+    position: absolute;
+    display: none;
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+#concert-detail-buy {
+    width: 100%;
+    background: #000;
+    color: white;
+    text-align: center;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    letter-spacing: 1px;
+}
+#concert-detail-buy a {
+    text-decoration: none;
+    color: #FFF;
+}
+.detail-info-box {
+    background: #FFF;
+    color: #000;
+    height: 100%;
+    overflow: auto;
+    text-transform: none;
+}
+.detail-info-box p {
+    padding: 0 10px 0 10px;
+    margin-bottom: 15px;
+    font-family: arial;
+    font-size: 14px;
+}
+.detail-info-box p:first-child {
+    margin-top: 15px;
+    font-weight: bold;
+}
+.footer {
+    /*position: absolute;*/
+    width: 100%
+}
+.footer-container {
+    position: relative;
+    /*height: 100%;*/
+}
+.footer-wrapper {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    z-index: 3;
+}
+#concert-feed-footer {
+    position: fixed;
+}
+
+/* -------------- Genre -------------- */
+#menu-items {
+    margin-top: 20px;
+}
+#stage-concerts-genres {
+    display: none;
+}
+
+#genre-menu {
+    overflow-y: auto;
+    margin-top: 20px; 
+    height: 100%;
+}
+
+#back-genre-list {
+    height: 20px;
+    background: #FFF;
+    width: 100%;
+    color: #ec008c;
+    position: relative;
+    text-align: center;
+    text-transform: none;
+    padding-top: 5px;
+    display: none;
+    opacity: 0;
+}
+
+.genre-btn, .series-btn {
+    background: #FFF;
+    padding: 20px 0 20px 0;
+    margin-bottom: 4px;
+    text-align: center;
+    color: #ec008c;
+    letter-spacing: 1px;
+}
+
+#genre-btn-weekend {
+    margin-bottom: 16px;
+}
+
+#genre-table {
+    display: none;
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+/* -------------- SERIES -------------- */
+
+#stage-concerts-series{
+    display: none;
+}
+.seriessubmenu-btn {
+    width: 290px;
+    font-size: 14px;
+    padding: 7px 0 7px 0;
+    background: #FFF;
+    margin: 0 auto 4px auto;
+}
+
+/* ---------- CONCERT DETAIL ---------- */
+#details-head-wrapper {
+    border-top: solid 1px #FFF;
+    border-bottom: solid 1px #FFF;
+    width: 100%;
+    padding: 5px 15px;
+    box-sizing: border-box;
+    position: relative;
+    margin: 0 auto;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+
+/* ---------- Food and Wine ---------- */
+
+#food-wine-title {
+    font-size: 30px;
+    width: 100%;
+    padding-top: 27px;
+    margin-bottom: 10px;
+    text-align: center;
+    letter-spacing: .1em;
+}
+#food-wine {
+    position: absolute;
+    height: 100%;
+    display: none;
+}
+#food-menu {
+    color: #ec008c;
+    font-size: 20px;
+    text-align: center;
+    overflow-y: auto;
+    margin: 0 auto;
+    position: relative;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+#food-inner-wrapper {
+    width: 100%;
+    position: absolute;
+}
+#food-wine-image {
+    width: 100%;
+}
+.food-wine-img img {
+    margin: 0 auto;
+}
+#food-wine-menu {
+    font-size: 22px;
+}
+.hb-footer {
+    text-align: center;
+    font-size: 30px;
+}
+
+/* ---------- MAP ---------- */
+#map-title {
+    font-size: 30px;
+    width: 100%;
+    padding-top: 37px;
+    margin-bottom: 10px;
+    text-align: center;
+    letter-spacing: .1em;
+}
+#stage-map {
+    position: absolute;
+    display: none;
+    height: 100%;
+    width: 100%;
+}
+/*#map-footer {
+    position: absolute;
+    display: none;
+}*/
+
+#mainmenu-map-btn {
+
+}
+
+#map-directions {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 20px;
+    letter-spacing: 1px;
+}
+
+#map-icon-container {
+    width: 343px;
+    height: 28px;
+    margin: 20px auto 20px auto;
+}
+
+#icon-legend-parking {
+    width: 28px;
+    height: 28px;
+    background: url('../img/icon-legend-parking.png') no-repeat;
+    background-size: 28px 28px;
+    display: inline-block;
+    padding-right: 20px;
+}
+
+#icon-legend-store {
+    width: 28px;
+    height: 28px;
+    background: url('../img/icon-legend-the-bowl-store.png') no-repeat;
+    background-size: 28px 28px;
+    display: inline-block;
+    padding-right: 20px;
+}
+
+#icon-legend-firstaid {
+    width: 28px;
+    height: 28px;
+    background: url('../img/icon-legend-first-aid.png') no-repeat;
+    background-size: 28px 28px;
+    display: inline-block;
+    padding-right: 20px;
+}
+
+#icon-legend-restrooms {
+    width: 28px;
+    height: 28px;
+    background: url('../img/icon-legend-restrooms.png') no-repeat;
+    background-size: 28px 28px;
+    display: inline-block;
+    padding-right: 20px;
+}
+
+#icon-legend-food {
+    width: 28px;
+    height: 28px;
+    background: url('../img/icon-legend-foodwine.png') no-repeat;
+    background-size: 28px 28px;
+    display: inline-block;
+    padding-right: 20px;
+}
+
+#icon-legend-accessibility {
+    width: 28px;
+    height: 28px;
+    background: url('../img/icon-legend-accessible-facilities.png') no-repeat;
+    background-size: 28px 28px;
+    display: inline-block;
+    padding-right: 20px;
+}
+
+#icon-legend-box-office {
+    width: 28px;
+    height: 28px;
+    background: url('../img/icon-legend-box-office.png') no-repeat;
+    background-size: 28px 28px;
+    display: inline-block;
+}
+#map-menu-container {
+    width: 180px;
+    margin: 0 auto 0px auto;
+    color: #ec008c;
+}
+#map-container {
+    overflow: auto;
+}
+#map-image-container img {
+    height: auto;
+    vertical-align: middle;
+    width: 100%;
+}
+.map-menu-map {
+    margin-right: 21px;
+}
+#legend-list {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #FFF;
+    display: none;
+    z-index: 2;
+    overflow-y: scroll;
+}
+/*#map-full-image {
+    position: relative;
+    background: url('../img/map-full.jpg') no-repeat;
+    width: 100%;
+    height: 100%;
+    background-size: 100% 690px;
+}*/
+.legend-icon {
+    margin-top: 0;
+    padding-left: 65px;
+    color: black;
+    height: 50px;
+    width: 100%;
+}
+#atm {
+    margin-top: 20px;
+}
+.legend-icon p {
+    margin-left: 65px;
+    margin-top: 5.5px;
+    font-size: 15px;
+    float: left;
+    text-transform: none;
+}
+.legend-icon img {
+    float: left;
+}
+#map-blank {
+    display: none;
+}
+.legend-layer {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.legend-layer-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.inner-layer-container {
+    position: relative;
+}
+/* ------------ Map Legend ------------ */
+#stage-map-legend {
+    display: none;
+    opacity: 0;
+}
+
+/* --- Give --- */
+#give {
+    position: absolute;
+    display: none;
+    height: 100%;
+}
+#give-title {
+    font-size: 30px;
+    width: 100%;
+    padding-top: 37px;
+    margin-bottom: 25px;
+    text-align: center;
+    letter-spacing: .1em;
+}
+#give-image {
+    width: 100%;
+}
+#give-inner-wrapper {
+    width: 100%;
+    position: absolute;
+}
+#give-menu {
+    color: #ec008c;
+    font-size: 24px;
+    text-align: center;
+    overflow-y: auto;
+    margin: 0 auto;
+    position: relative;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+/* --- FIND YOUR FRIENDS --- */
+.log-out a {
+    text-decoration: none;
+    color: #fff;
+}
+.friend-box {
+    color: black;
+    text-transform: none;
+}
+.friendpic img {
+    float: left;
+    height: 100px;
+    width: 100px;
+}
+#find-friends-section {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+.friends-title {
+    font-size: 30px;
+    width: 100%;
+    padding-top: 37px;
+    margin-bottom: 10px;
+    text-align: center;
+    letter-spacing: .1em;
+}
+.friends-main-wrapper {
+    height: 100%;
+    width: 100%;
+}
+.friends-main-container {
+    background-color: #FFF;
+    height: 100%;
+}
+.friends-icon-container {
+    text-align: center;
+    padding-top: 20px;
+}
+.friends-text-container {
+    text-align: center;
+    margin-top: 13px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+.friends-main-text {
+    margin-top: 15px;
+    color: #797979;
+    font-size: 23px;
+    text-transform: none;
+    margin-bottom: 10px;
+}
+.opt-out {
+    margin-top: 20px;
+    color: black;
+    font-size: 15px;
+    text-transform: none;
+}
+.connect-and {
+    color: black;
+    font-size: 23px;
+}
+#friends-list {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+.friendslist-main-container {
+    background-color: #FFF;
+    height: 100%;
+}
+.log-out {
+    position: absolute;
+    text-transform: none;
+    right: 20px;
+    top: 45px;
+}
+/* --- FAVORITES --- */
+#favorites {
+    position: absolute;
+    display: none;
+    height: 100%;
+    width: 100%;
+}
+.favorites-title {
+    font-size: 30px;
+    width: 100%;
+    padding-top: 37px;
+    margin-bottom: 30px;
+    text-align: center;
+    letter-spacing: .1em;
+}
+.favorites-main-wrapper {
+    height: 100%;
+    width: 100%;
+}
+.favorites-main-container {
+    text-align: center;
+    margin-top: 13px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+.favorites-container {
+    background-color: #FFF;
+    height: 100%;
+    overflow: scroll;
+}
+.favorites-heart {
+    position: absolute;
+    opacity: 0;
+    z-index: 5;
+    right: 22px;
+    top: 725px;
+    height: 26px;
+    width: 26px;
+}
+.favorites-button {
+    position: absolute;
+    right: 0;
+    /* top: 725px; */
+    height: 100%;
+    width: 65px;
+    z-index: 4;
+}
+
+/* --- SHOP --- */
+#shop-section {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+.shop-title {
+    font-size: 30px;
+    width: 100%;
+    padding-top: 37px;
+    margin-bottom: 30px;
+    text-align: center;
+    letter-spacing: .1em;
+}
+.shop-title-wrapper {
+    height: 165px;
+}
+.shop-main-wrapper {
+    height: 100%;
+    width: 100%;
+}
+.shop-main-container {
+    text-align: center;
+    margin-top: 13px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+.shoplist-container {
+    background-color: #FFF;
+    height: 100%;
+    overflow: scroll;
+}
+.shop-text {
+    text-align: center;
+    text-transform: none;
+    margin-bottom: 15px;
+}
+.link-box-container {
+    width: 395px;
+    margin: 0 auto;
+}
+.store-box-link {
+    text-align: center;
+    float: left;
+    background-color: #FFF;
+    color: #ec008c;
+    height: 25px;
+    width: 182px;
+}
+.store-box-link p {
+    margin-top: 4px;
+}
+#shop-online {
+    margin-left: 30px;
+}
+.store-item-container {
+    height: 106px;
+    width: 100%;
+    background: #FFF;
+    border-bottom: solid #a0a0a0 .5px;
+}
+.store-item-thumb {
+    height: inherit;
+    width: 120px;
+    float: left;
+}
+
+.store-item-thumb img {
+    width: 100%;
+    height: 100%;
+}
+
+.store-info-title {
+    font-size: 15px;
+    color: #000;
+    padding: 10px 0px 0px 14px;
+}
+
+.store-item-text {
+    height: inherit;
+    background: #FFF;
+    color: #000;
+    overflow: hidden;
+    position: relative;
+    text-transform: none;
+}
+.park-ride-container {
+    height: 106px;
+    width: 100%;
+    background: #FFF;
+    border-bottom: solid #a0a0a0 .5px;
+}
+#park-ride {
+    display: none;
+}
+/* --- CONTENT ONLY SECTIONS --- */
+/*.content-container {
+    height: 106px;
+    width: 100%;
+    background: #FFF;
+    border-bottom: solid #a0a0a0 .5px;
+}*/
+#park-ride {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+#shuttle {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+#metro {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+#rules {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+#box-office {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+#venue {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+#accessibility {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+#la-phil {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+#dudamel {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+#orchestra {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+.content-image {
+    width: 100%;
+}
+
+.content-title {
+    font-size: 30px;
+    width: 100%;
+    padding-top: 37px;
+    margin-bottom: 10px;
+    text-align: center;
+    letter-spacing: .1em;
+}
+.content-inner-wrapper {
+    overflow: scroll;
+    background: #fff;
+}
+.content-link-box {
+    width: 100%;
+    height: 20px;
+    text-transform: none;
+    text-align: center;
+    background-color: #e4e4e4;
+    color: #ec008c;
+}
+.content-container {
+    color: black;
+    text-transform: none;
+}
+.content-container p {
+    margin: 0 20px 20px 20px;
+
+}
+
+
+/* Landscape layout (with min-width) */
+
+
+@media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
+    
+}
+
+h1 {
+    font-size:1.5em;
+    font-weight:normal;
+    margin:0px;
+    overflow:visible;
+    padding:0px;
+    text-align:center;
+}
